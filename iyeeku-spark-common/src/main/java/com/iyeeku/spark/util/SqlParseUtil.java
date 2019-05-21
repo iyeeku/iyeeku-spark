@@ -11,28 +11,33 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author yq180
+ */
 public class SqlParseUtil {
 
-    public static final String[] note = {"#","--"};
-    public static final String multnote = "/*";
+    public static final String[] NOTE = {"#","--"};
+    public static final String MULTNOTE = "/*";
 
     public static int getLeftNoteLine(String line){
-        int[] _line_position_arr = new int[note.length];
+        int[] linePositionArr = new int[NOTE.length];
         int index = 0;
-        for (String eachnote : note){
-            int _p = line.indexOf(eachnote);
-            _line_position_arr[index] = _p;
+        for (String eachnote : NOTE){
+            int p = line.indexOf(eachnote);
+            linePositionArr[index] = p;
             index ++;
         }
 
-        int line_position = -1;
-        for (int _line_position : _line_position_arr){
-            if (_line_position >= 0 && line_position < 0)
-                line_position = _line_position;
-            if (_line_position >=0 && _line_position < line_position)
-                line_position = _line_position;
+        int linePosition = -1;
+        for (int varLinePosition : linePositionArr){
+            if (varLinePosition >= 0 && linePosition < 0) {
+                linePosition = varLinePosition;
+            }
+            if (varLinePosition >=0 && varLinePosition < linePosition) {
+                linePosition = varLinePosition;
+            }
         }
-        return line_position;
+        return linePosition;
     }
 
     /**
@@ -88,11 +93,11 @@ public class SqlParseUtil {
         List<String> lines = FileUtils.readLines(filePath);
         StringBuffer outString = new StringBuffer();
 
-        String multnote_flg = "0";
-        String return_str = "";
+        String multnoteFlg = "0";
+        String returnStr = "";
         String line;
-        for (String _line : lines){
-            line = _line.trim();
+        for (String v : lines){
+            line = v.trim();
             if (line.length() == 0){
                 continue;
             }
