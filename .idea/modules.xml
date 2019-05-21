@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/iyeeku-spark.iml" filepath="$PROJECT_DIR$/iyeeku-spark.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/iyeeku-spark.iml" filepath="$PROJECT_DIR$/.idea/iyeeku-spark.iml" />
       <module fileurl="file://$PROJECT_DIR$/iyeeku-spark-common/iyeeku-spark-common.iml" filepath="$PROJECT_DIR$/iyeeku-spark-common/iyeeku-spark-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/iyeeku-spark-demo/iyeeku-spark-demo.iml" filepath="$PROJECT_DIR$/iyeeku-spark-demo/iyeeku-spark-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/iyeeku-spark-scala/iyeeku-spark-scala.iml" filepath="$PROJECT_DIR$/iyeeku-spark-scala/iyeeku-spark-scala.iml" />
