@@ -90,7 +90,7 @@ public class SqlParseUtil {
 
         String multnote_flg = "0";
         String return_str = "";
-        String line = "";
+        String line;
         for (String _line : lines){
             line = _line.trim();
             if (line.length() == 0){
