@@ -39,7 +39,6 @@ public class SparkSqlTest {
         JavaSparkContext sc = new JavaSparkContext(session.sparkContext());
         JavaRDD<String[]> rdd = sc.parallelize(data);
         JavaRDD<Row> rdd_row = rdd.map(new Function<String[], Row>() {
-            @Override
             public Row call(String[] v1) throws Exception {
                 return RowFactory.create(v1);
             }
@@ -61,7 +60,6 @@ public class SparkSqlTest {
         Dataset<Row> sqlDF = session.sql("select * from staff");
 
         Dataset<String> stringDS = sqlDF.map(new MapFunction<Row, String>() {
-            @Override
             public String call(Row value) throws Exception {
                 return value.getString(0) + "  ,  " +  value.getString(1) + "  ,  " + value.getString(2);
             }
