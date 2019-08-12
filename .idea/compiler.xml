@@ -12,7 +12,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="iyeeku-spark" target="1.5" />
-      <module name="iyeeku-spark-common" target="1.5" />
+      <module name="iyeeku-spark-common" target="1.6" />
       <module name="iyeeku-spark-demo" target="1.5" />
     </bytecodeTargetLevel>
   </component>

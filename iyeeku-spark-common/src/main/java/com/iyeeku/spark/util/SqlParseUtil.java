@@ -16,14 +16,19 @@ import java.util.List;
  */
 public class SqlParseUtil {
 
+    /**
+     * 哪些字符属于注释#或者-- 遇到这种改行后续字符都忽略
+     */
     public static final String[] NOTE = {"#","--"};
-    public static final String MULTNOTE = "/*";
+    public static final String MULTILINE_NOTE = "/*";
+
+    public static boolean sql_error_if_exit = true;
 
     public static int getLeftNoteLine(String line){
         int[] linePositionArr = new int[NOTE.length];
         int index = 0;
-        for (String eachnote : NOTE){
-            int p = line.indexOf(eachnote);
+        for (String eachNote : NOTE){
+            int p = line.indexOf(eachNote);
             linePositionArr[index] = p;
             index ++;
         }
@@ -39,6 +44,31 @@ public class SqlParseUtil {
         }
         return linePosition;
     }
+
+    /**
+     * 找到匹配 MULTILINE_NOTE 的位置最左位置，最右位置
+     * @param line
+     * @return
+     */
+    public static int getLeftMultilineNoteLine(String line){
+        int multilinePositionLeft = line.indexOf(MULTILINE_NOTE);
+        if (multilinePositionLeft >= 0){
+            return multilinePositionLeft;
+        } else {
+            return -1;
+        }
+    }
+
+
+    public static int getRightMultilineNoteLine(String line){
+        int multilinePositionRight = line.indexOf(org.apache.commons.lang.StringUtils.reverse(MULTILINE_NOTE));
+        if (multilinePositionRight >= 0){
+            return multilinePositionRight;
+        } else {
+            return -1;
+        }
+    }
+
 
     /**
      * 将sql中多余的空格转化为一个空格
@@ -59,7 +89,7 @@ public class SqlParseUtil {
      * @param sqlString
      * @return
      */
-    public static String[] spliteSql(String sqlString){
+    public static String[] splitSql(String sqlString){
         String[] sqlArray = sqlString.split(";");
         List<String> list = new ArrayList<String>();
         for (String sql : sqlArray){
@@ -73,7 +103,7 @@ public class SqlParseUtil {
 
     public static void runSqlSegment(SparkSession session , String allString){
 
-        String[] sqlArray = spliteSql(allString);
+        String[] sqlArray = splitSql(allString);
 
         Logger logger = LoggerFactory.getLogger(ExecSql.class);
 
@@ -88,26 +118,56 @@ public class SqlParseUtil {
     }
 
 
+    /**
+     * 读取文件并把内容中的空行和注释（当行注释或者多行注释）去掉
+     * @param filePath
+     * @return
+     * @throws IOException
+     */
     public static String readLinesExceptBlank(File filePath) throws IOException{
 
         List<String> lines = FileUtils.readLines(filePath);
         StringBuffer outString = new StringBuffer();
 
-        String multnoteFlg = "0";
-        String returnStr = "";
-        String line;
+        String multilineNoteFlag = "0";
+        String returnStr,line;
         for (String v : lines){
             line = v.trim();
             if (line.length() == 0){
                 continue;
             }
 
-            outString.append(line).append("\n");
-
+            int linePosition = getLeftNoteLine(line);
+            int multilinePositionLeft = getLeftMultilineNoteLine(line);
+            int multilinePositionRight = getRightMultilineNoteLine(line);
+            if(multilinePositionLeft >= 0){
+                multilineNoteFlag = "1";
+            }
+            if (linePosition >= 0 && multilineNoteFlag.equals("0")){
+                returnStr = line.substring(0,linePosition);
+            }
+            //若查询到/* 则忽略改行
+            else if (multilineNoteFlag.equals("1")){
+                returnStr = "";
+            } else {
+                returnStr = line;
+            }
+            if (multilinePositionRight >= 0){
+                multilineNoteFlag = "0";
+            }
+            outString.append(returnStr).append("\n");
         }
-
-
         return normalSql(outString.toString());
+    }
+
+
+    /**
+     * 将sql空格去掉得到Array数组
+     * @param sqlString
+     * @return
+     */
+    public static String[] sqlToArray(String sqlString){
+        return sqlString.split("\\s+");
     }
 
 }
