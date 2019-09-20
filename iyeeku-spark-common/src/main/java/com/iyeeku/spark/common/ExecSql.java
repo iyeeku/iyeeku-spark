@@ -11,6 +11,13 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @ClassName ExecSql
+ * @Description TODO
+ * @Author YangQuan
+ * @Date 2019/9/20 20:09
+ * @Version 1.0
+ **/
 public class ExecSql {
 
     public static String sqlFileName = "";
