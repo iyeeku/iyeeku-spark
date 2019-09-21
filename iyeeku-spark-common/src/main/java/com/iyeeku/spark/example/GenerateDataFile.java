@@ -13,13 +13,13 @@ public class GenerateDataFile {
 
         String rq = "20190510";
 
-        int MaxFlag = 1000000;
+        int MaxFlag = 100000;
         Random random = new Random();
         int dayJyTotal = random.nextInt(MaxFlag) + MaxFlag;
 
         //System.out.println(dayJyTotal);
 
-        String filePath = "E:\\大数据\\tmp\\CCIF_U_JYWLXXWJ.20190420.000000.upd.dat";
+        String filePath = "F:\\B_大数据\\tmp\\IYEEKU_U_JYWLXXWJ.20190420.000000.dat";
 
         File fileout = new File(filePath);
 
@@ -34,8 +34,10 @@ public class GenerateDataFile {
 
             for (int i = 0 ; i < dayJyTotal ; i++){
                 StringBuffer sb = new StringBuffer();
-                sb.append("H00100").append(String.valueOf(System.currentTimeMillis()).substring(7)).append(DataUtils.formatCompWithZore(i,10)) //khjylsbh
-                  .append("11") //jydqdh  CHAR(2)
+                //khjylsbh
+                sb.append("H00100").append(String.valueOf(System.currentTimeMillis()).substring(7)).append(DataUtils.formatCompWithZore(i,10))
+                   //jydqdh  CHAR(2)
+                  .append("11")
                   .append("701")   //jyjgbh   CHAR(3)
                   .append(DataUtils.formatCompWithZore(random.nextInt(99999999),8)) //gylsh CHAR(8)
                   .append("117010100100446448")  //zhdh  CHAR(18)
@@ -67,7 +69,7 @@ public class GenerateDataFile {
         long endTimeMillis = System.currentTimeMillis();
         String endTime = df.format(new Date());
 
-/*        String cmd1 = "ls -l /home/iyeeku/CCIF_U_JYWLXXWJ.20190420.000000.upd.dat | awk '{print $5}'";
+/*      String cmd1 = "ls -l /home/iyeeku/CCIF_U_JYWLXXWJ.20190420.000000.upd.dat | awk '{print $5}'";
         String cmd2 = "du -sh /home/iyeeku/CCIF_U_JYWLXXWJ.20190420.000000.upd.dat | awk '{print $1}'";
 
         String cmd1Result = execCmd(cmd1 , null);
@@ -117,9 +119,15 @@ public class GenerateDataFile {
 
         }finally {
             try {
-                if (bufrIn != null) bufrIn.close();
-                if (bufrError != null) bufrError.close();
-                if (process != null) process.destroy();
+                if (bufrIn != null) {
+                    bufrIn.close();
+                }
+                if (bufrError != null) {
+                    bufrError.close();
+                }
+                if (process != null) {
+                    process.destroy();
+                }
             }catch (IOException e){
 
             }

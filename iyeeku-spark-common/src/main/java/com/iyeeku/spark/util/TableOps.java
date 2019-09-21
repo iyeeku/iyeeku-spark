@@ -1,8 +1,10 @@
 package com.iyeeku.spark.util;
 
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.SparkSessionExtensions;
 import org.apache.spark.sql.catalog.Catalog;
 import org.apache.spark.sql.catalyst.parser.ParserInterface;
+import org.apache.spark.sql.internal.SessionState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ public class TableOps {
 
     public static boolean tableExists(SparkSession sparkSession , String tableName){
 //        scala.Tuple2<String,String> tableIdentifierTableName =
+
 
 return false;
     }
