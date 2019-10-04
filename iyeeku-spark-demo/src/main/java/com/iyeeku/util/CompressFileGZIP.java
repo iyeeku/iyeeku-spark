@@ -18,17 +18,17 @@ import java.util.zip.GZIPOutputStream;
  **/
 public class CompressFileGZIP {
 
-   // private final static Logger LOGGER = LoggerFactory.getLogger(CompressFileGZIP.class);
+   private final static Logger LOGGER = LoggerFactory.getLogger(CompressFileGZIP.class);
 
     public static void doCompressFile(String inFileName){
-       // LOGGER.info("Creating the GZIP output stream");
+        LOGGER.info("Creating the GZIP output stream");
         String outFileName = inFileName + ".gz";
         GZIPOutputStream out = null;
 
         try {
           out = new GZIPOutputStream(new FileOutputStream(outFileName));
         } catch (Exception e){
-          //  LOGGER.error("Could not create file: " + outFileName, e);
+            LOGGER.error("Could not create file: " + outFileName, e);
             System.exit(1);
         }
 
@@ -36,7 +36,7 @@ public class CompressFileGZIP {
         try {
             in = new FileInputStream(inFileName);
         } catch (FileNotFoundException e){
-          //  LOGGER.error("File not found: " + inFileName,e);
+            LOGGER.error("File not found: " + inFileName,e);
             System.exit(1);
         }
 
@@ -47,17 +47,17 @@ public class CompressFileGZIP {
                 out.write(buf, 0,len);
             }
             in.close();
-          //  LOGGER.info("Completing the GZIP file");
+            LOGGER.info("Completing the GZIP file");
             out.finish();
             out.close();
         }catch (IOException e){
-          //  LOGGER.error("create GZIP file failure", e);
+            LOGGER.error("create GZIP file failure", e);
             System.exit(1);
         }
     }
 
     public static void main(String[] args) {
-       // LOGGER.info("CompressFileGZIP doCompressFile");
+        LOGGER.info("CompressFileGZIP doCompressFile");
         String strPath = "";
         doCompressFile(strPath);
     }

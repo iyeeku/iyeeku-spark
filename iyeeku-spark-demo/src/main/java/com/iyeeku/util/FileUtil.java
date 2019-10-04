@@ -17,7 +17,7 @@ import java.io.OutputStreamWriter;
  **/
 public class FileUtil {
 
-   // private final static Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
 
     public static boolean deleteFile(String filePath){
         boolean result = false;
@@ -43,12 +43,10 @@ public class FileUtil {
         File file = new File(dir);
         if (!file.exists()){
             try {
-                System.out.println("do mkdir.....");
                 result = file.mkdir();
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
         return result;
     }
@@ -65,7 +63,7 @@ public class FileUtil {
             bw = new BufferedWriter(new OutputStreamWriter(fos));
             bw.write(content);
         }catch(Exception e){
-          //  LOGGER.error("FileUtil write error",e);
+            LOGGER.error("FileUtil write error",e);
         }finally {
             try {
                 if (bw != null){
@@ -75,7 +73,7 @@ public class FileUtil {
                     fos.close();
                 }
             }catch (Exception e){
-            //    LOGGER.error("Close Stream error",e);
+                LOGGER.error("Close Stream error",e);
             }
         }
     }

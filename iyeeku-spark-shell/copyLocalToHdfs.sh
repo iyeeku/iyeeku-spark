@@ -2,7 +2,7 @@
 SHELL_HOME="/home/shell"
 . ${SHELL_HOME}/conf/conf.d
 
-if [[ $# -ne 4 -o "$1" != "-f" -o "$3" != "-d" ]]; then
+if [ $# -ne 4 -o "$1" != "-f" -o "$3" != "-d" ]; then
     echo "Usage: $0 -f filePrefix -d dataDate"
     exit 1
 fi
@@ -21,11 +21,11 @@ logFile=${localLogDir}/${shellNameLog}
 hdfsDataDir=${HDFS_BASE_DIR_IN}/${filePrefix}/${yyyyMM}
 jarsDir=${SHELL_HOME}/jars
 
-if [[ ! -d ${localDataDir} ]]; then
+if [ ! -d ${localDataDir} ]; then
     mkdir -p ${localDataDir}
 fi
 
-if [[ ! -d ${localLogDir} ]]; then
+if [ ! -d ${localLogDir} ]; then
     mkdir -p ${localLogDir}
 fi
 
@@ -33,7 +33,7 @@ fi
 localDataGzFileCount=`ls ${localDataDir} | grep ^${filePrefix}".${dataDate}.*.gz" | wc -l`
 localFlgFileCount=`ls ${localDataDir} | grep ^${filePrefix}".${dataDate}.*.flg" | wc -l`
 
-if [[ ${localDataGzFileCount} -eq 1 -a ${localFlgFileCount} -eq 1 ]]; then
+if [ ${localDataGzFileCount} -eq 1 -a ${localFlgFileCount} -eq 1 ]; then
     echo "yes"
 else
     echo "[INFO] ${localDataDir} no only one ${filePrefix}"
@@ -48,7 +48,7 @@ outLog()
 {
     logContent=$1
     iTime=`date +"%Y-%m-%d %H:%M:%S"`
-    if [[ ${LOG_LEVEL} -eq 0 ]]; then
+    if [ ${LOG_LEVEL} -eq 0 ]; then
         echo "[${iTime}] ${logContent}" >> ${logFile}
     else
         echo "[${iTime}] ${logContent}" | tee -a ${logFile}
@@ -69,7 +69,7 @@ cd ${localDataDir}
 outLog "[INFO ] start copy data file:${localDataGzFile} to HDFS:${hdfsDataDir}"
 iCount=1
 dataGzUploadFlg="1"
-while [[ ${dataGzUploadFlg} == "1" -a ${iCount} -le ${MAX_RETRY_TIMES} ]]
+while [ ${dataGzUploadFlg} == "1" -a ${iCount} -le ${MAX_RETRY_TIMES} ]
 do
     hdfs dfs -copyFromLocal -f ${localDataGzFile} ${hdfsDataDir}
     ret=$?
@@ -82,7 +82,7 @@ done
 
 ################################ 检查hdfs中是否存在data文件 ###########################
 hdfs dfs -test -f ${hdfsDataDir}/${localDataGzFile}
-if [[ $? -eq 0 ]]; then
+if [ $? -eq 0 ]; then
     dataGzUploadFlg="0"
 else
     outLog "[ERROR ] copy data file:${localDataGzFile} to HDFS failed after ${iCount} times"
@@ -93,7 +93,7 @@ fi
 outLog "[INFO ] start copy flg file:${localFlgFile} to HDFS:${hdfsDataDir}"
 iCount=1
 flagUploadFlg="1"
-while [[ ${flagUploadFlg} == "1" -a ${iCount} -le ${MAX_RETRY_TIMES} ]]
+while [ ${flagUploadFlg} == "1" -a ${iCount} -le ${MAX_RETRY_TIMES} ]
 do
     hdfs dfs -copyFromLocal -f ${localFlgFile} ${hdfsDataDir}
     ret=$?
@@ -106,7 +106,7 @@ done
 
 ################################ 检查hdfs中是否存在flg文件 ###########################
 hdfs dfs -test -f ${hdfsDataDir}/${localFlgFile}
-if [[ $? -eq 0 ]]; then
+if [ $? -eq 0 ]; then
     flagUploadFlg="0"
 else
     outLog "[ERROR ] copy flg file:${localFlgFile} to HDFS failed after ${iCount} times"

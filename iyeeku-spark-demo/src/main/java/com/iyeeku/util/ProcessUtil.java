@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
  **/
 public class ProcessUtil {
 
-   // private final static Logger LOGGER = LoggerFactory.getLogger(ProcessUtil.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ProcessUtil.class);
 
     public static String execCmd(String cmd, File dir,boolean isNeedResult){
         StringBuffer result = new StringBuffer();
@@ -46,7 +46,7 @@ public class ProcessUtil {
               }
           }
         } catch (Exception e){
-       //     LOGGER.error("process error",e);
+            LOGGER.error("process error",e);
         }finally {
             try {
                 if (bufrln != null){
@@ -60,7 +60,7 @@ public class ProcessUtil {
                     process.destroy();
                 }
             }catch (IOException e){
-         //       LOGGER.error("close stream error",e);
+                LOGGER.error("close stream error",e);
             }
         }
         return result.toString();

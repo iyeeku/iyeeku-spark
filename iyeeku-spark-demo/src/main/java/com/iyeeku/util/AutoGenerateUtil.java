@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  **/
 public class AutoGenerateUtil {
 
-    //private final static Logger LOGGER = LoggerFactory.getLogger(AutoGenerateUtil.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(AutoGenerateUtil.class);
 
     private final static int dqdhLength = 50;
     private final static String[] dqdhList = new String[]{"04","06","07","08","11","12","13","14","15","16","17","18",

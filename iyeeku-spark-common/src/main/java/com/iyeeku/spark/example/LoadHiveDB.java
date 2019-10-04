@@ -1,8 +1,11 @@
 package com.iyeeku.spark.example;
 
 import com.iyeeku.spark.util.AppConfig;
+import com.iyeeku.spark.util.LogUtil;
+import com.iyeeku.spark.util.TableOps;
 import org.apache.commons.cli.*;
 import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 import org.apache.spark.SparkConf;
 import org.apache.spark.deploy.SparkHadoopUtil;
 import org.apache.spark.sql.*;
@@ -106,20 +109,32 @@ public class LoadHiveDB {
 
         String deployMode = sparkConf.get("spark.submit.deployMode","client");
 
+        //初始化日志目录
+        String logPath = LogUtil.initLogDir(rq);
+        String logFullPath = LogUtil.initLogFile(logPath,className+"-"+tableName);
+        LogUtil.addRootLoggerFileAppender(logFullPath);
+
         SparkSession spark = SparkSession.builder().getOrCreate();
         //解压缩hdfs文件
         com.iyeeku.spark.util.HdfsUtils.gzipFileToHdfs(dataGzPath,dataPath);
 
+        try {
+            //获取输入表对应的数据库和表名
+            scala.Tuple2<String,String> tableIdentifier_tableName = TableOps.formatTable(spark,tableNameInput);
+            tableNameDb = tableIdentifier_tableName._1;
+            tableName = tableIdentifier_tableName._2;
+        }catch (Exception e){
+            e.printStackTrace();
+            System.exit(1);
+        }
 
+        Dataset<Row> df = FixedFileToDataFrame.getDataFrame(spark.sqlContext(),flgPath,dataPath);
+        df.write().mode(SaveMode.Overwrite).saveAsTable(tableNameInput);
 
-
-        SQLContext sqlContext = spark.sqlContext();
-
-        Dataset<Row> _dataFrame = null;
-
-        _dataFrame = FixedFileToDataFrame.getDataFrame(sqlContext,"","");
-
-        _dataFrame.write().mode(SaveMode.Overwrite).saveAsTable("");
+        //将解压缩后的文件删除
+        if (fs.exists(new Path(dataPath))){
+            fs.delete(new Path(dataPath),true);
+        }
 
         spark.stop();
 
