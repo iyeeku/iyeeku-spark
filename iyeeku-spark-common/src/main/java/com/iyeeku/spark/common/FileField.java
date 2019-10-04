@@ -1,4 +1,4 @@
-package com.iyeeku.spark.example;
+package com.iyeeku.spark.common;
 
 import java.io.Serializable;
 
