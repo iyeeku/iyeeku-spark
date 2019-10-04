@@ -60,7 +60,7 @@ sleepTime=10
 deployMode="cluster"
 hisTableName="${tableName}__HIS"
 appHdfsConf=/user/iyeeku/cfg/base.cfg
-loadMainClass=com.iyeeku.spark.example.LoadHiveDB
+loadMainClass=com.iyeeku.spark.common.LoadHiveDB
 jarsDir="${SHELL_HOME}/jars"
 sqlDir="${SHELL_HOME}/sql"
 
@@ -102,8 +102,26 @@ do
     sleep ${sleepTime}
 done
 
+#清理目录下的文件
+outLog "[INFO] 清理目录下的历史文件 ${filePrefix}"
 
+#解压缩本地文件，并上传到hdfs中
+outLog "[INFO] 解压缩本地文件 ${filePrefix} ,并把文件上传到hdfs中"
+sh ${SHELL_HOME}/copyLocalToHdfs.sh -f ${filePrefix} -d ${rq}
+if [ $? -ne 0 ]; then
+    outLog "[ERROR] 解压缩本地文件 ${filePrefix} ,并把文件上传到hdfs中失败!"
+    exit 1
+fi
 
+##将压缩文件上传hdfs，解压缩文件，将文件加载到临时表中，同时将数据加载到历史分区表
+spark-submit --name "${loadMainClass}-${tableName}" --class com.iyeeku.spark.common.LoadHiveDB --conf spark.app.conf=${appHdfsConf} --deploy-mode ${deployMode} ${jarsDir}/iyeeku-spark-common-1.0.0.jar -f ${filePrefix} -d ${rq} -t ${tableName}
+if [ $? -ne 0 ]; then
+    outLog "[ERROR] 加载 ${filePrefix}文件到hive表中 ${tableName}失败!"
+    exit 1
+fi
 
-#spark-submit --name "com.iyeeku.spark.example.LoadHiveDB-IYEEKU_TEST_HX_JYWLXXWJ" --class com.iyeeku.spark.example.LoadHiveDB --conf spark.app.conf=/user/iyeeku/cfg/base.cfg /home/shell/iyeeku-spark-common-1.0.0.jar -f IYEEKU_TEST_HX_JYWLXXWJ -d 20191004 -t IYEEKU_TEST_HX_JYWLXXWJ
+#刷新impala原数据和历史表
+#impala-shell -q "invalidate metadata ${tableName}" > /dev/null
+#impala-shell -q "invalidate metadata ${hisTableName}" > /dev/null
 
+exit 0
