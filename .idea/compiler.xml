@@ -15,7 +15,7 @@
       <module name="iyeeku-spark" target="1.5" />
       <module name="iyeeku-spark-common" target="1.8" />
       <module name="iyeeku-spark-demo" target="1.8" />
-      <module name="iyeeku-unload" target="1.5" />
+      <module name="iyeeku-unload" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
