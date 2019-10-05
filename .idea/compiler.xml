@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="iyeeku-spark-common" />
         <module name="iyeeku-spark-demo" />
+        <module name="iyeeku-unload" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="iyeeku-spark" target="1.5" />
       <module name="iyeeku-spark-common" target="1.8" />
       <module name="iyeeku-spark-demo" target="1.8" />
+      <module name="iyeeku-unload" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

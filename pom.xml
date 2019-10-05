@@ -11,6 +11,7 @@
     <modules>
         <module>iyeeku-spark-common</module>
         <module>iyeeku-spark-demo</module>
+        <module>iyeeku-unload</module>
     </modules>
 
     <dependencies>
