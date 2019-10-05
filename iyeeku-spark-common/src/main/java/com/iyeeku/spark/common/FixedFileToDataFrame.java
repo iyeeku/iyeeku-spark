@@ -1,5 +1,6 @@
 package com.iyeeku.spark.common;
 
+import com.iyeeku.spark.util.Schema;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
@@ -135,7 +136,7 @@ public class FixedFileToDataFrame {
     private static Dataset<Row> getDataFrame(SQLContext sqlContext , final TreeMap<Integer,FileField> fieldMap , String dataPath){
         JavaSparkContext sc = new JavaSparkContext(sqlContext.sparkContext());
         int _max_length = getLineLength(fieldMap);
-        StructType schema = getSchema(fieldMap);
+        StructType schema = Schema.getSchema(fieldMap);
         JavaRDD<byte[]> dataRdd = sc.binaryRecords(dataPath , _max_length);
         JavaRDD<Row> dataRdd_row = dataRdd.map(new Function<byte[], Row>() {
             public Row call(byte[] v1) throws Exception {
@@ -160,17 +161,5 @@ public class FixedFileToDataFrame {
         return getDataFrame(sqlContext,field_map,dataPath);
     }
 
-
-    public static StructType getSchema(TreeMap<Integer,FileField> fieldMap){
-        List<StructField> fields = new ArrayList<StructField>();
-        for (Map.Entry<Integer,FileField> entry : fieldMap.entrySet()){
-            FileField fileField = entry.getValue();
-            String fieldType = fileField.getFieldtype();
-            String fieldName = fileField.getFieldname();
-            StructField structField = DataTypes.createStructField(fieldName , DataTypes.StringType , false);
-            fields.add(structField);
-        }
-        return DataTypes.createStructType(fields);
-    }
 
 }
