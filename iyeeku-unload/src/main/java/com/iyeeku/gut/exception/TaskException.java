@@ -2,7 +2,6 @@ package com.iyeeku.gut.exception;
 
 import com.iyeeku.gut.task.AbstractTask;
 
-
 /**
  * @ClassName TaskException
  * @Description TODO
@@ -23,7 +22,6 @@ public class TaskException extends GUTException {
     }
 
     public TaskException(){
-
     }
 
     public TaskException(String paramString){
@@ -84,8 +82,7 @@ public class TaskException extends GUTException {
     public String getMessage(){
         if (this.task != null){
             StringBuffer localStringBuffer = new StringBuffer();
-            //TODO his.task.getTaskID()
-            localStringBuffer.append("NO." + this.task.toString() + " has exception!");
+            localStringBuffer.append("NO." + this.task.getTaskID() + " has exception!");
             localStringBuffer.append(super.getMessage());
             return localStringBuffer.toString();
         }

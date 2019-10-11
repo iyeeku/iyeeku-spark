@@ -1,8 +1,5 @@
 package com.iyeeku.gut.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @ClassName DataFileNameException
  * @Description TODO
@@ -15,7 +12,6 @@ public class DataFileNameException extends InitContextException {
     public String dataFileName;
 
     public DataFileNameException(){
-
     }
 
     public DataFileNameException(GUTException paramGUTException){

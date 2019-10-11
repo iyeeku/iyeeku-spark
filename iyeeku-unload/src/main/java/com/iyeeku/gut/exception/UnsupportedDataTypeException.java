@@ -1,8 +1,5 @@
 package com.iyeeku.gut.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @ClassName UnsupportedDataTypeException
  * @Description TODO
@@ -13,7 +10,6 @@ import org.slf4j.LoggerFactory;
 public class UnsupportedDataTypeException extends TaskException {
 
     public UnsupportedDataTypeException(){
-
     }
 
     public UnsupportedDataTypeException(String paramString){

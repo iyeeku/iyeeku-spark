@@ -1,8 +1,8 @@
 package com.iyeeku.gut.util;
 
-
 import java.io.*;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * @ClassName FileUtils
@@ -245,6 +245,177 @@ public class FileUtils {
         return localArrayList;
     }
 
+    public static ArrayList<String> getFileNameFromFolder(String paramString){
+        ArrayList<String> localArrayList = new ArrayList();
+        File localFile = new File(paramString);
+        File[] arrayOfFile = localFile.listFiles();
+        for (int i =0; i < arrayOfFile.length; i++){
+            if (arrayOfFile[i].isFile()){
+                localArrayList.add(arrayOfFile[i].getName());
+            }
+        }
+        return localArrayList;
+    }
+
+    public static ArrayList<String> getFolderNameFromFolder(String paramString){
+        ArrayList<String> localArrayList = new ArrayList();
+        File localFile = new File(paramString);
+        File[] arrayOfFile = localFile.listFiles();
+        for (int i =0; i < arrayOfFile.length; i++){
+            if (arrayOfFile[i].isDirectory()){
+                localArrayList.add(arrayOfFile[i].getName());
+            }
+        }
+        return localArrayList;
+    }
+
+    public static int getFileCount(String paramString){
+        int i = 0;
+        try {
+            File localFile = new File(paramString);
+            if (!isFolderExist(paramString)){
+                return i;
+            }
+            File[] arrayOfFile = localFile.listFiles();
+            for (int j = 0;j < arrayOfFile.length; j++){
+                if (arrayOfFile[j].isFile()){
+                    i++;
+                }
+            }
+        }catch (Exception localException){
+            i = 0;
+        }
+        return i;
+    }
+
+    public static int getFileCount(String paramString1, String paramString2){
+        int i = 0;
+        if (!isFolderExist(paramString1)){
+            return i;
+        }
+        if ((paramString2.equals("")) || (paramString2 == null)){
+            return getFileCount(paramString1);
+        }
+        File localFile = new File(paramString1);
+        File[] arrayOfFile = localFile.listFiles();
+        for (int j = 0;j<arrayOfFile.length;j++){
+            if ((arrayOfFile[j].isFile()) && Pattern.matches(paramString2,arrayOfFile[j].getName())){
+                i++;
+            }
+        }
+        return i;
+    }
+
+    public static int getStrCountFromFile(String paramString1, String paramString2){
+        if (!isFileExist(paramString1)){
+            return 0;
+        }
+        FileReader localFileReader = null;
+        BufferedReader localBufferedReader = null;
+        int i = 0;
+        try {
+            localFileReader = new FileReader(paramString1);
+            localBufferedReader = new BufferedReader(localFileReader);
+            String str = null;
+            while ((str = localBufferedReader.readLine()) != null){
+                if (str.indexOf(paramString2) != -1){
+                    i++;
+                }
+            }
+        }catch (FileNotFoundException localFileNotFoundException){
+            localFileNotFoundException.printStackTrace();
+        }catch (IOException localIOException){
+            localIOException.printStackTrace();
+        }finally {
+            try {
+                if (localBufferedReader != null){
+                    localBufferedReader.close();
+                }
+                if (localFileReader != null){
+                    localFileReader.close();
+                }
+            }catch (Exception localException){
+                localException.printStackTrace();
+            }
+        }
+        return i;
+    }
+
+    public static int getFileLineCount(String paramString){
+        if (!isFileExist(paramString)){
+            return 0;
+        }
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+        int i = 0;
+        try {
+            fileReader = new FileReader(paramString);
+            bufferedReader = new BufferedReader(fileReader);
+            while (bufferedReader.readLine() != null){
+                    i++;
+            }
+        }catch (FileNotFoundException localFileNotFoundException1){
+            localFileNotFoundException1.printStackTrace();
+        }catch (IOException localIOException){
+            localIOException.printStackTrace();
+        }finally {
+            try {
+                if (fileReader != null){
+                    fileReader.close();
+                }
+                if (bufferedReader != null){
+                    bufferedReader.close();
+                }
+            }catch (Exception l){
+                l.printStackTrace();
+            }
+        }
+        return i;
+    }
+
+    public static boolean ifFileIsNull(String paramString) throws  IOException{
+        boolean bool = false;
+        FileReader localFileReader = new FileReader(paramString);
+        if (localFileReader.read() == -1){
+            bool = true;
+        }
+        localFileReader.close();
+        return bool;
+    }
+
+    public static boolean isFileExist(String paramString){
+        if ((paramString == null) || (paramString.length() == 0)){
+            return false;
+        }
+        File localFile = new File(paramString);
+        return (localFile.exists()) && (!localFile.isDirectory());
+    }
+
+    public static boolean isFolderExist(String paramString){
+        if ((paramString == null) || (paramString.length() == 0)){
+            return false;
+        }
+        File localFile = new File(paramString);
+        return localFile.isDirectory();
+    }
+
+    public static Double getFileSize(String paramString){
+        if (!isFileExist(paramString)){
+            return null;
+        }
+        File localFile = new File(paramString);
+        double d = Math.ceil(localFile.length() / 1024.0D);
+        return new Double(d);
+    }
+
+    public static Double getFileByteSize(String paramString){
+        if (!isFileExist(paramString)){
+            return null;
+        }
+        File localFile = new File(paramString);
+        double d = Math.ceil(localFile.length());
+        return new Double(d);
+    }
 
 
 

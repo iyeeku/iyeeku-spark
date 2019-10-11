@@ -1,8 +1,5 @@
 package com.iyeeku.gut.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @ClassName GUTExceptionConstants
  * @Description TODO
@@ -41,6 +38,12 @@ public class GUTExceptionConstants {
     public static final GUTExceptionInfo GUT300010 = new GUTExceptionInfo("GUT300-010",99);
     public static final GUTExceptionInfo GUT300020 = new GUTExceptionInfo("GUT300-020",99);
     public static final GUTExceptionInfo GUT300100 = new GUTExceptionInfo("GUT300-100",99);
+
+    public static final GUTExceptionInfo GUT400400 = new GUTExceptionInfo("GUT400-400",99);
+
+    public static final GUTExceptionInfo GUT400500 = new GUTExceptionInfo("GUT400-500",99);
+    public static final GUTExceptionInfo GUT400510 = new GUTExceptionInfo("GUT400-510",99);
+    public static final GUTExceptionInfo GUT400520 = new GUTExceptionInfo("GUT400-520",99);
 
 
 

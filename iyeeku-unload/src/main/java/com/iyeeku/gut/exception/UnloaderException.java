@@ -1,8 +1,5 @@
 package com.iyeeku.gut.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @ClassName UnloaderException
  * @Description TODO
@@ -13,7 +10,6 @@ import org.slf4j.LoggerFactory;
 public class UnloaderException extends GUTException {
 
     public UnloaderException(){
-
     }
 
     public UnloaderException(String paramString){

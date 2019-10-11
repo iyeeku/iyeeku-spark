@@ -27,12 +27,48 @@
             <artifactId>commons-codec</artifactId>
             <version>1.10</version>
         </dependency>
-
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.0.4</version>
+        </dependency>
 
         <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.8</version>
+        </dependency>
+
+<!--        <dependency>
+            <groupId>com.ibm.db2</groupId>
+            <artifactId>db2jcc</artifactId>
+            <version>8.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esen.informix</groupId>
+            <artifactId>ifxjdbc</artifactId>
+            <version>4.10.JC4G1</version>
+        </dependency>-->
+
+
+<!--        <dependency>
             <groupId>org.dom4j</groupId>
             <artifactId>dom4j</artifactId>
             <version>2.1.1</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.11.0</version>
         </dependency>
         <dependency>
             <groupId>xml-apis</groupId>

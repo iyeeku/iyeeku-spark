@@ -1,7 +1,5 @@
 package com.iyeeku.gut.util;
 
-
-
 /**
  * @ClassName DataQueue
  * @Description TODO

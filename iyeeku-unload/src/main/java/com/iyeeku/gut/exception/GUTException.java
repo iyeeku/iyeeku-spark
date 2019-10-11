@@ -1,6 +1,5 @@
 package com.iyeeku.gut.exception;
 
-
 /**
  * @ClassName GUTException
  * @Description TODO
@@ -14,7 +13,6 @@ public class GUTException extends Exception {
     private String[] innerInfo;
 
     public GUTException(){
-
     }
 
     public GUTException(GUTException paramGUTException){

@@ -1,8 +1,5 @@
 package com.iyeeku.gut.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @ClassName GUTExceptionInfo
  * @Description TODO

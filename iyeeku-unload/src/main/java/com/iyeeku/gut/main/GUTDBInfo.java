@@ -1,7 +1,5 @@
 package com.iyeeku.gut.main;
 
-
-
 /**
  * @ClassName GUTDBInfo
  * @Description TODO
