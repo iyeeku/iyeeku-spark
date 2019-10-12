@@ -109,4 +109,16 @@ public class GUT extends Thread{
         GUT.taskList = taskList;
     }
 
+    public static GUTDBInfo getDbInfo() {
+        return dbInfo;
+    }
+
+    public static void setDbInfo(GUTDBInfo dbInfo) {
+        GUT.dbInfo = dbInfo;
+    }
+
+    public static boolean isDebugMode(){
+        return "Debug".equals(getContext().getDeployMode());
+    }
+
 }

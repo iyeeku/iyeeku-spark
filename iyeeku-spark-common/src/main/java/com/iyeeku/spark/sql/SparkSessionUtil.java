@@ -1,6 +1,7 @@
 package com.iyeeku.spark.sql;
 
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.hive.HiveExternalCatalog;
 import org.apache.spark.sql.internal.SessionState;
 import org.apache.spark.sql.internal.SharedState;
 
@@ -23,6 +24,10 @@ public class SparkSessionUtil {
     public static SessionState getSessionState(SparkSession sparkSession){
         return sparkSession.sessionState();
     }
+
+/*    public static HiveExternalCatalog getHiveExternalCatalog(SparkSession sparkSession){
+        return (org.apache.spark.sql.hive.HiveExternalCatalog)getSharedState(sparkSession).externalCatalog();
+    }*/
 
 
 
