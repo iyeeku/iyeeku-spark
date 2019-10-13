@@ -40,9 +40,19 @@ public class GUTExceptionConstants {
     public static final GUTExceptionInfo GUT300100 = new GUTExceptionInfo("GUT300-100",99);
 
 
+    public static final GUTExceptionInfo GUT400230 = new GUTExceptionInfo("GUT400-230",99);
     public static final GUTExceptionInfo GUT400235 = new GUTExceptionInfo("GUT400-235",99);
 
+    public static final GUTExceptionInfo GUT400310 = new GUTExceptionInfo("GUT400-310",99);
+
+    public static final GUTExceptionInfo GUT400100 = new GUTExceptionInfo("GUT400-100",99);
+
     public static final GUTExceptionInfo GUT400400 = new GUTExceptionInfo("GUT400-400",99);
+
+    public static final GUTExceptionInfo GUT400410 = new GUTExceptionInfo("GUT400-410",99);
+    public static final GUTExceptionInfo GUT400420 = new GUTExceptionInfo("GUT400-420",99);
+
+    public static final GUTExceptionInfo GUT400430 = new GUTExceptionInfo("GUT400-430",99);
 
     public static final GUTExceptionInfo GUT400500 = new GUTExceptionInfo("GUT400-500",99);
 
@@ -53,7 +63,7 @@ public class GUTExceptionConstants {
 
 
     public static final GUTExceptionInfo GUT400900 = new GUTExceptionInfo("GUT400-900",99);
-
+    public static final GUTExceptionInfo GUT400910 = new GUTExceptionInfo("GUT400-910",99);
 
 
 

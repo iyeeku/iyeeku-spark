@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="GBK" ?>
+<GUT-CONFIG>
+    <ContextParams>
+        <ThreadNum>1</ThreadNum>                <!-- The maximum number of threads at startup, 6, minimum 1-->
+        <OutputFilePath>D:\data</OutputFilePath>                <!-- Please confirm whether the address is exits -->
+        <ErrorLimits>1</ErrorLimits>                <!-- After the failure of the task execution times again -->
+        <DatabaseType>Oracle</DatabaseType>             <!-- Oracle,MySql,Informix,DB2 etc -->
+        <SleepTime>100</SleepTime>              <!-- After the failure of the thread dormancy of time -->
+        <DataTimeFormat>yyyyMMdd</DataTimeFormat>               <!-- Date format -->
+        <ReconnTimes>3</ReconnTimes>                <!-- Database conn failure, the maximum number of 10 -->
+        <DeployMode>Product</DeployMode>                <!-- Deployment model:Debug, Product -->
+        <FetchSize>1</FetchSize>                <!-- Database prefetch size, range 1-10, -->
+        <LogMode>loop</LogMode>             <!-- log mode:loop, archive -->
+        <LogSize>100000</LogSize>               <!-- log size Default:1024*1024*10 -->
+        <ReplaceSpecialChar>true</ReplaceSpecialChar>               <!-- true,false -->
+    </ContextParams>
+    <Tasks>
+        <Task>
+            <FileName>sample</FileName>             <!-- After a number of unloading data file and standard file name, please do not contain special characters\/:*?"<>| -->
+            <SQL>
+                <![CDATA[
+                   SELECT * FROM sample
+                ]]>                     <!-- Please ensure your SQL statements executable and
+                                            Please don't delete, modify the SQL statement -->
+            </SQL>
+            <GZ>false</GZ>              <!-- Whether compression:true,false -->
+            <FetchSize>1</FetchSize>                <!-- Database prefetch size, range 1-10, -->
+            <BufferSize>5000</BufferSize>           <!-- Buffer size -->
+        </Task>
+
+    </Tasks>
+</GUT-CONFIG>

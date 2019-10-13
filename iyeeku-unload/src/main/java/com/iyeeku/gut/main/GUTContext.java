@@ -18,7 +18,8 @@ public class GUTContext {
     private int reconnTimes;
     private String deployMode;
     private int fetchSize;
-    private String logSize;
+    private String logMode;
+    private int logSize;
     private boolean isReplaceSpecialChar;
     private long bufferMaxSize;
     private int Skip;
@@ -95,11 +96,19 @@ public class GUTContext {
         this.fetchSize = fetchSize;
     }
 
-    public String getLogSize() {
+    public String getLogMode() {
+        return logMode;
+    }
+
+    public void setLogMode(String logMode) {
+        this.logMode = logMode;
+    }
+
+    public int getLogSize() {
         return logSize;
     }
 
-    public void setLogSize(String logSize) {
+    public void setLogSize(int logSize) {
         this.logSize = logSize;
     }
 

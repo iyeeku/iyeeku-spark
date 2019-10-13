@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!-- GUT application configuration-->
+<APP-INF>
+    <!-- GUT VERSION-->
+    <Version>2.0</Version>
+    <!-- DataFile Name Pattern-->
+    <DataFile>
+        <NamePattern>##fileName##.##dataDate##.000000.0000</NamePattern>
+    </DataFile>
+    <!-- The ColumnType need precision or scale-->
+    <ColumnType>
+        <NotNeedPrecision>INTEGER,SMALLINT,BIGINT,DATE,TIME,TIMESTAMP,MONEY,DATETIME,FLOAT</NotNeedPrecision>
+        <NeedScale>NUMBER,NUMERIC,DECIMAL</NeedScale>
+    </ColumnType>
+    <TaskThread>
+        <BufferSizeRatio>5</BufferSizeRatio>
+    </TaskThread>
+    <!-- DataBase Info -->
+    <DBInfos>
+        <DBInfo type="Oracle">
+            <Unloader>com.iyeeku.gut.unloader.impl.DefaultUnloader</Unloader>
+            <Task>com.iyeeku.gut.task.impl.OracleFLTask</Task>
+            <DriverClassName>oracle.jdbc.driver.OracleDriver</DriverClassName>
+            <UrlPattern>jdbc:oracle:thin:@##IP##:##PORT##:##SERVICENAME##</UrlPattern>
+            <SupportedDataType>Char,Varchar2,nchar,Nvarchar2,Number,Date,Float,TimeStamp,TIMESTAMPLTZ,TIMESTAMPTZ</SupportedDataType>
+            <AutoCommit>false</AutoCommit>
+        </DBInfo>
+        <DBInfo type="MySql">
+            <Unloader>com.iyeeku.gut.unloader.impl.DefaultUnloader</Unloader>
+            <Task>com.iyeeku.gut.task.impl.MySqlFLTask</Task>
+            <DriverClassName>com.mysql.jdbc.Driver</DriverClassName>
+            <UrlPattern>jdbc:mysql://##IP##:##PORT##/##DBNAME##</UrlPattern>
+            <SupportedDataType>SMALLINT,INTEGER,BIGINT,FLOAT,REAL,NUMERIC,DOUBLE,DECIMAL,CHAR,VARCHAR,DATE,TIME,DATETIME,TIMESTAMP</SupportedDataType>
+            <AutoCommit>false</AutoCommit>
+        </DBInfo>
+    </DBInfos>
+
+</APP-INF>

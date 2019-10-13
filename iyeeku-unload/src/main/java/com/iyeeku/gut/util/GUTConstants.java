@@ -1,5 +1,7 @@
 package com.iyeeku.gut.util;
 
+import java.io.File;
+
 /**
  * @ClassName GUTConstants
  * @Description TODO
@@ -56,6 +58,65 @@ public class GUTConstants {
 
 
     public static final String MARKFILE_PATH = "";
+
+    public static final String XML_APPINF_Version = "Version";
+    public static final String XML_APPINF_DataFile = "DataFile";
+    public static final String XML_APPINF_TaskThread = "TaskThread";
+    public static final String XML_APPINF_BufferSizeRatio = "BufferSizeRatio";
+    public static final String XML_APPINF_ColumnType = "ColumnType";
+    public static final String XML_APPINF_NamePattern = "NamePattern";
+    public static final String XML_APPINF_NeedScale = "NeedScale";
+    public static final String XML_APPINF_NotNeedPrecision = "NotNeedPrecision";
+    public static final String XML_APPINF_DBInfos = "DBInfos";
+    public static final String XML_APPINF_DBInfo = "DBInfo";
+    public static final String XML_APPINF_DBInfo_Type = "type";
+    public static final String XML_APPINF_Unloader = "Unloader";
+    public static final String XML_APPINF_Task = "Task";
+    public static final String XML_APPINF_AutoCommit = "AutoCommit";
+    public static final String XML_APPINF_DriverClassName = "DriverClassName";
+    public static final String XML_APPINF_UrlPattern = "UrlPattern";
+    public static final String XML_APPINF_SupportedDataType = "SupportedDataType";
+    public static final String Properties_IP = "IP";
+    public static final String Properties_PORT = "PORT";
+    public static final String Properties_SERVICENAME = "SERVICENAME";
+    public static final String Properties_DBNAME = "DBNAME";
+    public static final String Properties_USERID = "USERID";
+    public static final String Properties_PASSWORD = "PASSWORD";
+    public static final String GZ_Yes = "true";
+    public static final String GZ_No = "false";
+    public static final String LogMode_Loop = "loop";
+    public static final String LogMode_Archive = "archive";
+    public static final String DeployMode_Debug = "Debug";
+    public static final String DeployMode_Product = "Product";
+    public static final int Task_Status_Wait = 0;
+    public static final int Task_Status_Running = 1;
+    public static final int Task_Status_Success = 2;
+    public static final int Task_Status_Failed = -1;
+    public static volatile int succ_num = 0;
+    public static final String FF_FILENAME = "FILENAME=";
+    public static final String FF_FILESIZE = "FILESIZE=";
+    public static final String FF_ROWCOUNT = "ROWCOUNT=";
+    public static final String FF_CREATEDATETIME = "CREATEDATETIME=";
+    public static final String FF_SQL = "SQL=";
+    public static final String FF_ROWLENGTH = "ROWLENGTH=";
+    public static final String FF_COLUMNCOUNT = "COLUMNCOUNT=";
+    public static final String FF_COLUMNDESCRIPTION = "COLUMNDESCRIPTION=";
+    public static final String FF_COLUMNEXCEPTION = "WARNING:\n";
+    public static final int FixedLengthTask_TYPE1 = 1;
+    public static final int FixedLengthTask_TYPE2 = 2;
+    public static final int FixedLengthTask_TYPE3 = 3;
+    public static final int Default_QueueSize = 10000;
+    public static final String XML_XSD_PATH = FileUtils.getSystemPath() + File.separator + "schema" + File.separator + "GUTConfigSchema.xsd";
+    public static final int Default_BufferSize = 10000;
+    public static final int Default_FetchSize = 1;
+    public static final int Default_LogSize = 10485760;
+    public static final String Default_DataTimeFormat = "yyyy-MM-dd";
+    public static final String Default_LogFileName = "GUTInfo.log";
+    public static final String Default_ErrorLogFileName = "GUTError.log";
+    public static final String Default_WarnLogFileName = "GUTWarn.log";
+    public static final String Boolean_String_True = "true";
+    public static final String Boolean_String_False = "false";
+    public static final int Default_ThreadSleepTime = 100;
 
 
 }
