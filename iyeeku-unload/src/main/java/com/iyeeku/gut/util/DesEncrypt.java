@@ -22,14 +22,15 @@ public class DesEncrypt {
     }
 
     public static void main(String[] args) {
-        if ((args!=null) && (args.length >0)){
+/*        if ((args!=null) && (args.length >0)){
             System.out.println(getEncString(args[0]));
         }else{
             StringBuffer localStringBuffer = new StringBuffer();
             localStringBuffer.append("[Your password is unavailable!]\n");
             System.out.println(localStringBuffer.toString());
-        }
+        }*/
 
+        System.out.println(getEncString("iyeekudev"));
     }
 
 

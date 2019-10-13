@@ -1,5 +1,7 @@
 package com.iyeeku.gut.util;
 
+import com.iyeeku.gut.main.GUT;
+
 import java.io.File;
 
 /**
@@ -57,7 +59,7 @@ public class GUTConstants {
     public static final String Command_Option_Help = "";
 
 
-    public static final String MARKFILE_PATH = "";
+    public static final String MARKFILE_PATH = GUT.getProcessPath() + File.separator + "app" + File.separator + GUT.MarkFileName + ".gut";
 
     public static final String XML_APPINF_Version = "Version";
     public static final String XML_APPINF_DataFile = "DataFile";

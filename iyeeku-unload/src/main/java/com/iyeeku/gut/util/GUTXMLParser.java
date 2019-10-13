@@ -28,8 +28,8 @@ public class GUTXMLParser {
         localDocumentBuilderFactory.setNamespaceAware(true);
         localDocumentBuilderFactory.setValidating(true);
         String str = paramString2;
-        localDocumentBuilderFactory.setAttribute("http://java.sun.com/xml/jaxp/","");
-        localDocumentBuilderFactory.setAttribute("http://java.sun.com/xml/jaxp/","");
+        localDocumentBuilderFactory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage","http://www.w3.org/2001/XMLSchema");
+        localDocumentBuilderFactory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource","file:" + str);
         GUTXMLErrorHandler localGUTXMLErrorHandler = new GUTXMLErrorHandler();
         try {
             DocumentBuilder localDocumentBuilder = localDocumentBuilderFactory.newDocumentBuilder();
