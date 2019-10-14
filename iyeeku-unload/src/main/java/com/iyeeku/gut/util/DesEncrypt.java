@@ -30,7 +30,7 @@ public class DesEncrypt {
             System.out.println(localStringBuffer.toString());
         }*/
 
-        System.out.println(getEncString("iyeekudev"));
+        System.out.println(getEncString("iyeeku"));
     }
 
 

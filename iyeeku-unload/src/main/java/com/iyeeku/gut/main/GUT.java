@@ -680,8 +680,9 @@ public class GUT extends Thread{
     private void initLogger() throws InitContextException{
         InputStream localInputStream = null;
         try{
-            //com/iyeeku/gut/config/log4j.properties
-            localInputStream = GUT.class.getResourceAsStream("/com/iyeeku/gut/config/log4j.properties");// getClass().getResourceAsStream("/com/iyeeku/gut/config/log4j.properties");
+            //com/iyeeku/gut/config/log4j.properties  com/iyeeku/gut/config/log4j.properties
+            //GUT.class.getResourceAsStream("/com/iyeeku/gut/config/log4j.properties");//
+            localInputStream = getClass().getResourceAsStream("/com/iyeeku/gut/config/log4j.properties");
             Properties localProperties = new Properties();
             localProperties.load(localInputStream);
             localProperties = modifyProperties(localProperties);

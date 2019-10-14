@@ -501,8 +501,7 @@ public abstract class FixedLengthTask extends AbstractTask {
         localStringBuffer.append("\n\n");
         localStringBuffer.append(GUTConstants.FF_FILENAME + getDataFileFullNameNoPath());
         localStringBuffer.append("\n\n");
-        //TODO
-        localStringBuffer.append(GUTConstants.FF_FILESIZE + getFileName());
+        localStringBuffer.append(GUTConstants.FF_FILESIZE + getFileSize());
         localStringBuffer.append("\n\n");
         localStringBuffer.append(GUTConstants.FF_ROWCOUNT + getRowCount());
         localStringBuffer.append("\n\n");

@@ -137,14 +137,6 @@ public abstract class AbstractTask extends Thread implements Comparable{
         this.taskID = taskID;
     }
 
-    public Timestamp getStartTimeStamp() {
-        return startTimeStamp;
-    }
-
-    public void setStartTimeStamp(Timestamp startTimeStamp) {
-        this.startTimeStamp = startTimeStamp;
-    }
-
     public Timestamp getEndTimeStamp() {
         return endTimeStamp;
     }
@@ -153,6 +145,17 @@ public abstract class AbstractTask extends Thread implements Comparable{
         this.endTimeStamp = endTimeStamp;
     }
 
+    public Timestamp getStartTimeStamp() {
+        return startTimeStamp;
+    }
+
+    public void setStartTimeStamp(Timestamp startTimeStamp) {
+        this.startTimeStamp = startTimeStamp;
+    }
+
+    public long getFileSize(){
+        return getDataFile().length();
+    }
 
     public int getStatus() {
         return status;
@@ -192,6 +195,10 @@ public abstract class AbstractTask extends Thread implements Comparable{
         this.columnCount = columnCount;
     }
 
+    public void setGz(boolean paramBoolean){
+        this.gz = paramBoolean;
+    }
+
     public long getRowCount() {
         return rowCount;
     }
@@ -208,7 +215,9 @@ public abstract class AbstractTask extends Thread implements Comparable{
         this.supportedDataType = supportedDataType;
     }
 
-
+    public int getTaskOrder() {
+        return taskOrder;
+    }
 
     public int getFetchSize() {
         return fetchSize;
@@ -488,9 +497,7 @@ public abstract class AbstractTask extends Thread implements Comparable{
         this.unloader = paramIUnloader;
     }
 
-    public int getTaskOrder() {
-        return taskOrder;
-    }
+
 
     public void setTaskOrder(int taskOrder) {
         this.taskOrder = taskOrder;
