@@ -29,21 +29,6 @@ if [ ! -d ${localLogDir} ]; then
     mkdir -p ${localLogDir}
 fi
 
-##搜索对应的数据文件及标识文件、若数据文件及标识文件不存在的话、退出
-localDataGzFileCount=`ls ${localDataDir} | grep ^${filePrefix}".${dataDate}.*.gz" | wc -l`
-localFlgFileCount=`ls ${localDataDir} | grep ^${filePrefix}".${dataDate}.*.flg" | wc -l`
-
-if [ ${localDataGzFileCount} -eq 1 -a ${localFlgFileCount} -eq 1 ]; then
-    echo "yes"
-else
-    echo "[INFO] ${localDataDir} no only one ${filePrefix}"
-    exit 1
-fi
-
-localDataGzFile=`ls ${localDataDir} | grep ^${filePrefix}".${dataDate}.*.gz"`
-localFlgFile=`ls ${localDataDir} | grep ^${filePrefix}".${dataDate}.*.flg"`
-localDataFile=`echo ${localDataGzFile} | sed "s/.gz//g"`
-
 outLog()
 {
     logContent=$1
@@ -54,6 +39,23 @@ outLog()
         echo "[${iTime}] ${logContent}" | tee -a ${logFile}
     fi
 }
+
+##搜索对应的数据文件及标识文件、若数据文件及标识文件不存在的话、退出
+localDataGzFileCount=`ls ${localDataDir} | grep ^${filePrefix}".${dataDate}.*.gz" | wc -l`
+localFlgFileCount=`ls ${localDataDir} | grep ^${filePrefix}".${dataDate}.*.flg" | wc -l`
+
+if [ ${localDataGzFileCount} -eq 1 -a ${localFlgFileCount} -eq 1 ]; then
+    outLog "[INFO] yes : ${localDataDir} has ${filePrefix} one"
+else
+    outLog "[ERROR] no : ${localDataDir} no only one ${filePrefix}"
+    exit 1
+fi
+
+localDataGzFile=`ls ${localDataDir} | grep ^${filePrefix}".${dataDate}.*.gz"`
+localFlgFile=`ls ${localDataDir} | grep ^${filePrefix}".${dataDate}.*.flg"`
+localDataFile=`echo ${localDataGzFile} | sed "s/.gz//g"`
+
+
 
 
 outLog "[INFO ] -------------------------------------------------------------------------------------------------------"

@@ -16,7 +16,7 @@ do
         shift 1
         filePrefix=$1
         if [ ${filePrefix} == "" ]; then
-            echo "ERROR\t filePrefix 不能为空"
+            echo -e "ERROR\t filePrefix 不能为空"
             exit 1
         else
             shift 1
@@ -26,7 +26,7 @@ do
         shift 1
         rq=$1
         if [ ${rq} == "" ]; then
-            echo "ERROR\t rq 不能为空"
+            echo -e "ERROR\t rq 不能为空"
             exit 1
         else
             shift 1
@@ -36,15 +36,15 @@ do
         shift 1
         tableName=$1
         if [ ${tableName} == "" ]; then
-            echo "ERROR\t tableName 不能为空"
+            echo -e "ERROR\t tableName 不能为空"
             exit 1
         else
             shift 1
         fi
         ;;
     *)
-        usage
-        echo "ERROR\t ${shellName}调用错误"
+        echo "Usage: ${shellName} -f filePrefix -t tableName -d dataDate"
+        echo -e "ERROR\t ${shellName}调用错误"
         exit 1
         ;;
     esac
@@ -86,6 +86,20 @@ mkdir -p ${localLogDir}
 ##########################################加载##########################################
 outLog "[INFO] 开始加载数据文件--------------------${filePrefix} ${rq}---------------------------------"
 
+file_condition()
+{
+    filePrefix=$1
+    dataDate=$2
+    ##搜索对应的数据文件及标识文件、若数据文件及标识文件不存在的话、退出
+    localDataGzFileCount=`ls ${localDataDir} | grep ^${filePrefix}".${dataDate}.*.gz" | wc -l`
+    localFlgFileCount=`ls ${localDataDir} | grep ^${filePrefix}".${dataDate}.*.flg" | wc -l`
+
+    if [ ${localDataGzFileCount} -eq 1 -a ${localFlgFileCount} -eq 1 ]; then
+       echo 1
+    else
+        echo 0
+    fi
+}
 
 ##搜索对应的数据文件及标识文件，若数据文件及标识文件不存在的话，循环
 while [ true ];
@@ -114,7 +128,8 @@ if [ $? -ne 0 ]; then
 fi
 
 ##将压缩文件上传hdfs，解压缩文件，将文件加载到临时表中，同时将数据加载到历史分区表
-spark-submit --name "${loadMainClass}-${tableName}" --class com.iyeeku.spark.common.LoadHiveDB --conf spark.app.conf=${appHdfsConf} --deploy-mode ${deployMode} ${jarsDir}/iyeeku-spark-common-1.0.0.jar -f ${filePrefix} -d ${rq} -t ${tableName}
+#spark-submit --name "${loadMainClass}-${tableName}" --class com.iyeeku.spark.common.LoadHiveDB --conf spark.app.conf=${appHdfsConf} --deploy-mode ${deployMode} ${jarsDir}/iyeeku-spark-common-1.0.0.jar -f ${filePrefix} -d ${rq} -t ${tableName}
+spark-submit --name "${loadMainClass}-${tableName}" --class com.iyeeku.spark.common.LoadHiveDB --conf spark.app.conf=${appHdfsConf} ${jarsDir}/iyeeku-spark-common-1.0.0.jar -f ${filePrefix} -d ${rq} -t ${tableName}
 if [ $? -ne 0 ]; then
     outLog "[ERROR] 加载 ${filePrefix}文件到hive表中 ${tableName}失败!"
     exit 1
