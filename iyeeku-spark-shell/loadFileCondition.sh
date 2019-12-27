@@ -60,7 +60,7 @@ sleepTime=10
 deployMode="cluster"
 hisTableName="${tableName}__HIS"
 appHdfsConf=/user/iyeeku/cfg/base.cfg
-loadMainClass=com.iyeeku.spark.common.LoadHiveDB
+loadMainClass=com.iyeeku.spark.common.LoadFileToHive
 jarsDir="${SHELL_HOME}/jars"
 sqlDir="${SHELL_HOME}/sql"
 
@@ -128,8 +128,8 @@ if [ $? -ne 0 ]; then
 fi
 
 ##将压缩文件上传hdfs，解压缩文件，将文件加载到临时表中，同时将数据加载到历史分区表
-#spark-submit --name "${loadMainClass}-${tableName}" --class com.iyeeku.spark.common.LoadHiveDB --conf spark.app.conf=${appHdfsConf} --deploy-mode ${deployMode} ${jarsDir}/iyeeku-spark-common-1.0.0.jar -f ${filePrefix} -d ${rq} -t ${tableName}
-spark-submit --name "${loadMainClass}-${tableName}" --class com.iyeeku.spark.common.LoadHiveDB --conf spark.app.conf=${appHdfsConf} ${jarsDir}/iyeeku-spark-common-1.0.0.jar -f ${filePrefix} -d ${rq} -t ${tableName}
+#spark-submit --name "${loadMainClass}-${tableName}" --class com.iyeeku.spark.common.LoadFileToHive --conf spark.app.conf=${appHdfsConf} --deploy-mode ${deployMode} ${jarsDir}/iyeeku-spark-common-1.0.0.jar -f ${filePrefix} -d ${rq} -t ${tableName}
+spark-submit --name "${loadMainClass}-${tableName}" --class com.iyeeku.spark.common.LoadFileToHive --conf spark.app.conf=${appHdfsConf} ${jarsDir}/iyeeku-spark-common-1.0.0.jar -f ${filePrefix} -d ${rq} -t ${tableName}
 if [ $? -ne 0 ]; then
     outLog "[ERROR] 加载 ${filePrefix}文件到hive表中 ${tableName}失败!"
     exit 1

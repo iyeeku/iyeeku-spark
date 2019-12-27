@@ -58,17 +58,17 @@ localDataFile=`echo ${localDataGzFile} | sed "s/.gz//g"`
 
 
 
-outLog "[INFO ] -------------------------------------------------------------------------------------------------------"
+outLog "[INFO] -------------------------------------------------------------------------------------------------------"
 
 ################################ hdfs 创建目录 ##############################
-outLog "[INFO ] mkdir hdfs data dir:${hdfsDataDir}"
+outLog "[INFO] mkdir hdfs data dir:${hdfsDataDir}"
 hdfs dfs -mkdir -p ${hdfsDataDir}
 
 cd ${localDataDir}
 
 
 ################################ 上传压缩数据文件 #############################
-outLog "[INFO ] start copy data file:${localDataGzFile} to HDFS:${hdfsDataDir}"
+outLog "[INFO] start copy data file:${localDataGzFile} to HDFS:${hdfsDataDir}"
 iCount=1
 dataGzUploadFlg="1"
 while [ ${dataGzUploadFlg} == "1" -a ${iCount} -le ${MAX_RETRY_TIMES} ]
@@ -87,12 +87,12 @@ hdfs dfs -test -f ${hdfsDataDir}/${localDataGzFile}
 if [ $? -eq 0 ]; then
     dataGzUploadFlg="0"
 else
-    outLog "[ERROR ] copy data file:${localDataGzFile} to HDFS failed after ${iCount} times"
+    outLog "[ERROR] copy data file:${localDataGzFile} to HDFS failed after ${iCount} times"
     exit 1
 fi
 
 ################################ 上传flg文件 #############################
-outLog "[INFO ] start copy flg file:${localFlgFile} to HDFS:${hdfsDataDir}"
+outLog "[INFO] start copy flg file:${localFlgFile} to HDFS:${hdfsDataDir}"
 iCount=1
 flagUploadFlg="1"
 while [ ${flagUploadFlg} == "1" -a ${iCount} -le ${MAX_RETRY_TIMES} ]
@@ -111,7 +111,7 @@ hdfs dfs -test -f ${hdfsDataDir}/${localFlgFile}
 if [ $? -eq 0 ]; then
     flagUploadFlg="0"
 else
-    outLog "[ERROR ] copy flg file:${localFlgFile} to HDFS failed after ${iCount} times"
+    outLog "[ERROR] copy flg file:${localFlgFile} to HDFS failed after ${iCount} times"
     exit 1
 fi
 

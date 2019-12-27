@@ -16,7 +16,7 @@ import java.util.Properties;
 /**
  * LoadHiveDBNew
  */
-public class LoadHiveDB {
+public class LoadFileToHive {
 
     private static String PARAM_OPTION_F = "f";
     private static String PARAM_OPTION_D = "d";
@@ -42,7 +42,7 @@ public class LoadHiveDB {
 
     private static Options options = new Options();
     private static FileSystem fs = null;
-    private static String className = LoadHiveDB.class.getName();
+    private static String className = LoadFileToHive.class.getName();
 
     /**
      * 打印帮助信息
@@ -97,7 +97,7 @@ public class LoadHiveDB {
         dataPath = dataGzPath.replace(".gz","");
     }
 
-    public LoadHiveDB(){
+    public LoadFileToHive(){
 
     }
 
