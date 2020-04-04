@@ -130,7 +130,12 @@ public class ExportTableFixToText {
 
             SparkConf conf = new SparkConf();
             conf.setAppName(ExportTableFixToText.class.getName() + "_" + prefix);
-            SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+
+            // Clouder Manager
+            //SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+
+            SparkSession spark = SparkSession.builder().enableHiveSupport().getOrCreate();
+
             SparkContext sc = spark.sparkContext();
             int buffSize = sc.hadoopConfiguration().getInt("io.file.buffer.size",4096);
             Dataset<Row> dataFrame = spark.sql(sql);

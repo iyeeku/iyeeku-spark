@@ -72,7 +72,14 @@ public class IyeekuMain {
 
         SparkConf conf = new SparkConf();
         conf.setAppName(IyeekuMain.class.getName());
-        SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+        //Clouder Manager
+        //SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+
+        /**
+         * TODO spark读取Hive出错： Database 'xxx' not found
+         *  错误找不到数据库,spark默认是不读hive-site.xml , 加上enableHiveSupport()即可
+         */
+        SparkSession spark = SparkSession.builder().enableHiveSupport().getOrCreate();
 
         spark.udf().register("transFromDateToString", new TransFromDateToString(), DataTypes.StringType);
         spark.udf().register("transFromStringToDate", new TransFromStringToDate(), DataTypes.DateType);

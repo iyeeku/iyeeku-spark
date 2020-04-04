@@ -64,7 +64,8 @@ do
     else
         echo "${v_times}"
         outLog "[INFO] 开始执行iyeeku数据处理【循环次数${v_times}】"
-        ${_spark_submit_bash} --master yarn --class com.iyeeku.project.iyeeku.IyeekuMain --jars ${jarsDir}/iyeeku-spark-common-1.0.0.jar ${jarsDir}/task.jar -d ${rq} -f ${sqlDir}/iyeeku_batch.sql
+        #${_spark_submit_bash} --master yarn --class com.iyeeku.project.iyeeku.IyeekuMain --jars ${jarsDir}/iyeeku-spark-common-1.0.0.jar ${jarsDir}/task.jar -d ${rq} -f ${sqlDir}/iyeeku_batch.sql
+        ${_spark_submit_bash} --class com.iyeeku.project.iyeeku.IyeekuMain --jars ${jarsDir}/iyeeku-spark-common-1.0.0.jar ${jarsDir}/task.jar -d ${rq} -f ${sqlDir}/iyeeku_batch.sql
         ret=$?
         if [ ${ret} -ne 0 ];then
             outLog "[ERROR] 开始执行iyeeku数据处理【循环次数${v_times}】失败！重新执行"
