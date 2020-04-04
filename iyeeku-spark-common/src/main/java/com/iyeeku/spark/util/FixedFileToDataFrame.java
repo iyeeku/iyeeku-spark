@@ -1,6 +1,5 @@
-package com.iyeeku.spark.common;
+package com.iyeeku.spark.util;
 
-import com.iyeeku.spark.util.Schema;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;

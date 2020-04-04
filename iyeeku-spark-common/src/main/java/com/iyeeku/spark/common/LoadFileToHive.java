@@ -1,6 +1,7 @@
 package com.iyeeku.spark.common;
 
 import com.iyeeku.spark.util.AppConfig;
+import com.iyeeku.spark.util.FixedFileToDataFrame;
 import com.iyeeku.spark.util.LogUtil;
 import com.iyeeku.spark.util.TableOps;
 import org.apache.commons.cli.*;
@@ -129,7 +130,6 @@ public class LoadFileToHive {
         String logPath = LogUtil.initLogDir(rq);
         String logFullPath = LogUtil.initLogFile(logPath,className+"-"+tableName);
         LogUtil.addRootLoggerFileAppender(logFullPath);
-
 
         //解压缩hdfs文件
         com.iyeeku.spark.util.HdfsUtils.gzipFileToHdfs(dataGzPath,dataPath);

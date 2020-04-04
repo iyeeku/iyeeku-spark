@@ -1,6 +1,5 @@
 package com.iyeeku.spark.util;
 
-import com.iyeeku.spark.common.FileField;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;

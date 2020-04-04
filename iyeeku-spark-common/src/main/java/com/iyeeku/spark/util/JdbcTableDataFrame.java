@@ -1,4 +1,4 @@
-package com.iyeeku.spark.common;
+package com.iyeeku.spark.util;
 
 import com.iyeeku.spark.util.Schema;
 import org.apache.spark.sql.Dataset;
