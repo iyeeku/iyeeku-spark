@@ -2,8 +2,8 @@
 SPARK_BASE=spark-submit
 LOG_BASE_DIR=/home/shell/log
 MAX_RETRY_TIMES=3
-LOCAL_BASE_DIR_IN=/home/iyeekuftpdata/in
-LOCAL_BASE_DIR_OUT=/home/iyeekuftpdata/out
+LOCAL_BASE_DIR_IN=/home/data/in
+LOCAL_BASE_DIR_OUT=/home/data/out
 LOG_LEVEL=1
 HDFS_BASE_DIR_IN=/in/data
 HDFS_BASE_DIR_OUT=/out/data
