@@ -54,8 +54,6 @@ do
     fi
 done
 
-sleepTime=10
-
 ##部署模式和历史表、配置文件在hdfs的位置
 deployMode="cluster"
 hisTableName="${tableName}__HIS"

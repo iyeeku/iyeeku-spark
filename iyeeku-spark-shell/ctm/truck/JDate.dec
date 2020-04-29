@@ -1,0 +1,14 @@
+#程序名称：JDate.dec
+#程序描述：日期工具函数块
+#程序类型：脚本
+#执行环境Shell
+
+JDate_monthDayCount(){
+    ##1. 参数验证，内部调用无校验
+    ##2.从日历返回当月天数
+    eval="`cal ${3} ${2} | awk '{if($NF>=28 && $NF<=31){print $NF}}' | tail -1`"
+}
+
+#JDate_monthDayCount "_day_counts" "2019" "01"
+#echo ${_day_counts}
+
