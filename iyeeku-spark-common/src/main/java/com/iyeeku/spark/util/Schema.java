@@ -1,9 +1,6 @@
 package com.iyeeku.spark.util;
 
-import org.apache.spark.sql.types.DataType;
-import org.apache.spark.sql.types.DataTypes;
-import org.apache.spark.sql.types.StructField;
-import org.apache.spark.sql.types.StructType;
+import org.apache.spark.sql.types.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +77,20 @@ public class Schema {
                 fieldType = DataTypes.StringType;
             }
             StructField field = DataTypes.createStructField(fieldName,fieldType,false);
+            fields.add(field);
+        }
+        return DataTypes.createStructType(fields);
+    }
+
+    /**
+     * 将schema中的字段名小写改为大写，此处在写jdbc时需要
+     * @param structType
+     * @return
+     */
+    public static StructType upper(StructType structType){
+        List<StructField> fields = new ArrayList<StructField>();
+        for (StructField entry : structType.fields()){
+            StructField field = entry.copy(entry.name().toUpperCase(), entry.dataType(), entry.nullable(), entry.metadata());
             fields.add(field);
         }
         return DataTypes.createStructType(fields);

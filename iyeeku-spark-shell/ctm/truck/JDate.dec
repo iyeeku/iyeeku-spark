@@ -12,3 +12,27 @@ JDate_monthDayCount(){
 #JDate_monthDayCount "_day_counts" "2019" "01"
 #echo ${_day_counts}
 
+addMonths(){
+    _mcount=`expr $3 \* 12 + $4 + $5`
+    _my="`expr ${_mcount} / 12`"
+    _mm="`expr ${_mcount} \% 12`"
+    if [ ${_mm} -eq 0 ]; then
+        eval ${1}="`expr ${_my} - 1`"
+        eval ${2}="12"
+    else
+        eval ${1}="${_my}"
+        eval ${2}="${_mm}"
+    fi
+}
+
+JDate_dateFormat(){
+    _formated_date="$2"
+    _length=`echo "$3" | awk '{print length($0)}'`
+    if [ ${_length} -lt 2 ]; then
+        _formated_date="${_formated_date}0${3}"
+    else
+        _formated_date="${_formated_date}${3}"
+    fi
+
+
+}
