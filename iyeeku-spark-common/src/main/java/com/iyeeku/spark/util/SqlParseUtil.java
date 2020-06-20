@@ -2,6 +2,8 @@ package com.iyeeku.spark.util;
 
 import com.iyeeku.spark.common.ExecSql;
 import org.apache.commons.io.FileUtils;
+import org.apache.spark.api.java.function.ForeachFunction;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,13 +110,33 @@ public class SqlParseUtil {
         Logger logger = LoggerFactory.getLogger(ExecSql.class);
 
         for (String sql : sqlArray){
-            logger.warn("runSql:[ " + sql + " ]");
+            logger.warn("runSql:[" + sql + "]");
+            // TODO
             long start = System.currentTimeMillis();
-            session.sql(sql).show();
-            long end = System.currentTimeMillis();
-            logger.warn("runSql:[ " + (end - start) + " ] ms");
-        }
+            //session.sql(sql).show();
+            session.sparkContext().setCallSite(sql);
+            try {
+                if(sql.toLowerCase().startsWith("select")) {
+                    session.sql(sql).show();
+                }else{
+                    session.sql(sql).foreach(new ForeachFunction<Row>() {
+                        @Override
+                        public void call(Row row) throws Exception {
 
+                        }
+                    });
+                }
+                session.sparkContext().clearCallSite();
+                long end = System.currentTimeMillis();
+                logger.warn("runSql:[" + (end - start) + "] ms");
+            }catch (Exception e){
+                e.printStackTrace();
+                logger.error("runSql:[" +e.getMessage()+ "]");
+                if (sql_error_if_exit) System.exit(2);
+                throw e;
+            }
+
+        }
     }
 
 

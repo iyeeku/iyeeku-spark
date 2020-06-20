@@ -80,6 +80,8 @@ public class IyeekuMain {
          *  错误找不到数据库,spark默认是不读hive-site.xml , 加上enableHiveSupport()即可
          */
         SparkSession spark = SparkSession.builder().enableHiveSupport().getOrCreate();
+        //SparkSession spark = SparkSession.builder().enableHiveSupport().config(conf).getOrCreate();
+        //SparkSession spark = SparkSession.builder().config(conf).enableHiveSupport().getOrCreate();
 
         spark.udf().register("transFromDateToString", new TransFromDateToString(), DataTypes.StringType);
         spark.udf().register("transFromStringToDate", new TransFromStringToDate(), DataTypes.DateType);
