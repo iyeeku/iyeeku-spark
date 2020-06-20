@@ -48,7 +48,8 @@ mkdir -p ${localLogDir}
 ##########################################加载##########################################
 outLog "[INFO] 开始导出数据文件--------------------${filePrefix} ${rq}---------------------------------"
 
-${_spark_submit_bash} --class ${exportMainClass} ${EXPORT_MAIN_CLASS_JAR} "${_sql}" "${_realPrefix}" "${_fieldSetting}" "${_date}"
+#${_spark_submit_bash} --class ${exportMainClass} ${EXPORT_MAIN_CLASS_JAR} "${_sql}" "${_realPrefix}" "${_fieldSetting}" "${_date}"
+${_spark_submit_bash} --master yarn --class ${exportMainClass} ${EXPORT_MAIN_CLASS_JAR} "${_sql}" "${_realPrefix}" "${_fieldSetting}" "${_date}"
 ret=$?
 if [ ${ret} -eq 0 -a -f ${outputDataFile} -a -f ${outputFlgFile} ]; then
     outLog "[INFO] succedd export data file to ${outputFlgFile}"
