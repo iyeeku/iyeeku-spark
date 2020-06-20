@@ -27,7 +27,7 @@ logFile=${localLogDir}/${shellNameLog}
 hdfsDataDir=${HDFS_BASE_DIR_IN}/${_prefix}/${_yyyymm}
 localDataDir=${LOCAL_BASE_DIR_OUT}/${_date}
 ##真正需要的前缀
-_realPrefix="${_prefix}.${_date}.000000.0000"
+_realPrefix="${localDataDir}/${_prefix}.${_date}.000000.0000"
 outputDataFile="${_realPrefix}.dat.gz"
 outputFlgFile="${_realPrefix}.flg"
 

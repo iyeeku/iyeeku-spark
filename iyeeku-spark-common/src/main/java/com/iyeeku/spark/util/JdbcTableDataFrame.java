@@ -89,7 +89,8 @@ public class JdbcTableDataFrame {
         }
         long startTime = System.currentTimeMillis();
         logger.warn("runSql:【" + String.valueOf(paramMap.get("SQL")) + "】");
-        df.coalesce(partitions).foreachPartition(new ForeachPartitionFunction<Row>() {
+        //df.coalesce(partitions).foreachPartition(new ForeachPartitionFunction<Row>() {
+        df.repartition(partitions).foreachPartition(new ForeachPartitionFunction<Row>() {
             Connection conn = null;
             PreparedStatement psmt = null;
             @Override
