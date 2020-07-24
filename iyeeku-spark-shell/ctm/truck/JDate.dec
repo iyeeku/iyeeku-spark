@@ -9,6 +9,7 @@ JDate_monthDayCount(){
     eval="`cal ${3} ${2} | awk '{if($NF>=28 && $NF<=31){print $NF}}' | tail -1`"
 }
 
+
 #JDate_monthDayCount "_day_counts" "2019" "01"
 #echo ${_day_counts}
 
@@ -26,13 +27,178 @@ addMonths(){
 }
 
 JDate_dateFormat(){
+    ##1.参数验证，内部调用无无校验
+    ##2.处理格式
     _formated_date="$2"
+    ##月<10
     _length=`echo "$3" | awk '{print length($0)}'`
     if [ ${_length} -lt 2 ]; then
         _formated_date="${_formated_date}0${3}"
     else
         _formated_date="${_formated_date}${3}"
     fi
-
-
+    ##天<10
+    _length=`echo "$4" | awk '{print length($0)}'`
+    if [ ${_length} -lt 2 ]; then
+        _formated_date="${_formated_date}0${4}"
+    else
+        _formated_date="${_formated_date}${4}"
+    fi
+    ##
+    eval ${1}="${_formated_date}"
 }
+
+###############################################################################
+#将8位字符转换为有效日期
+#参数：
+#       1 - 日期值容器（存放转换后的日期值）
+#       2 - 日期字符串（yyyymmdd）
+#返回值
+#       0 - 转发成功
+#       !0 - 转换失败
+###############################################################################
+JDate_toDate(){
+    ###1.参数验证
+    if [ $# -lt 2 ]; then
+        echo "参数[${*}]错误!"
+        exit -1
+    fi
+    ##
+    if [ $# -eq 4 ]; then
+        _dat_value=`JDate_toDate2 "$2" "$3" "$4"`
+    else
+        _dat_value="$2"
+    fi
+    ###2.格式验证
+    _dat=`echo "${_dat_value}" | sed 's/[^0-9]//g'`
+    _length=`echo "${_dat}" | awk '{print length($1)}'`
+    if [ "${_dat}" != "${_dat_value}" -o "${_length}" != "8" ]; then
+        _dat="${_dat_value}"
+        echo "日期[${_dat}]格式错误，正确格式应为:yyyyMMdd 如:20120101"
+        exit 1
+    else
+        ###3.有效性验证
+        _y=`echo "${_dat_value}" | cut -c 1-4`
+        _m=`echo "${_dat_value}" | cut -c 5-6`
+        _d=`echo "${_dat_value}" | cut -c 7-8`
+        ##若年数大于4999或者小于1970 则无效
+        if [ ${_y} -gt 4999 -o ${_y} -lt 1970 ]; then
+            echo "日期[${_dat}]年[${_y}]无效，年只能在[1970~4999]之间"
+            exit 2
+        fi
+        ##若月份不在1-12之间则月无效
+        if [ ${_m} -gt 12 -o ${_m} -lt 1 ]; then
+            echo "日期[${_dat}]月[${_m}]无效，月只能在[1~12]之间"
+            exit 3
+        fi
+        ##处理当前月天数
+        JDate_monthDayCount "_dayCount" "${_y}" "${_m}"
+        if [ ${_d} -gt ${_dayCount} -o ${_d} -lt 1 ]; then
+            echo "日期[${_dat}]天[${_d}]无效，${_y}年${_m}月的天数只能在[1~${_dayCount}]之间"
+            exit 4
+        fi
+        ##
+        eval ${1}="${_dat_value}"
+    fi
+}
+
+
+###############################################################################
+#将8位字符转换为有效日期
+#参数：
+#       1 - 日期值容器（存放转换后的日期值）
+#       2 - 日期字符串（yyyymmdd）
+#返回值
+#       0 - 转发成功
+#       !0 - 转换失败
+###############################################################################
+JDate_toDate2(){
+    _month_array="Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec"
+    _month=`echo ${_month_array} | awk -F , '{for(i=1;i<=NF;i++){if($i=="'$1'"){print i;break;}}}'`
+    _day=$2
+    _year=`echo ${3} | grep :`
+    #处理年
+    if [ "${_year}" == "" ]; then
+        _year="$3"
+    else
+        _year="`date +%Y`"
+    fi
+    #处理月小于10
+    if [ ${_month} -lt 10 ]; then
+        _month="0${_month}"
+    fi
+    #处理天小于10
+    if [ ${_day} -lt 10 ]; then
+        _day="0${_day}"
+    fi
+    echo "${_year}${_month}${_day}"
+}
+
+JDate_dayDiff(){
+    echo "TODO"
+}
+
+JDate_monthDiff(){
+    echo "TODO"
+}
+
+JDate_trunc(){
+    echo "TODO"
+}
+
+###############################################################################
+#日期加减（按天）
+#参数:
+#       1 - 日期值容器（存放日期值）
+#       2 - 日期字符串（yyyyMMdd）
+#       3 - 加减天数（负数为减正数为加）
+#返回值:
+#       0 - 转发成功
+#       !0 - 失败
+###############################################################################
+JDate_add(){
+    ##1.若调用参数小于3个则显示参数错误
+    if [ $# -lt 3 ]; then
+        echo "参数错误[${*}]错误!"
+        exit 1
+    fi
+    ##2.验证日期参数是否正确
+    JDate_toDate "${1}" "${2}"
+    if [ $? -ne 0 ]; then
+        exit 1
+    fi
+    ##3.验证加减天数格式是否正确
+    ##4.范围验证
+    if [ ${3} -lt -999 -0 ${3} -gt 999 ]; then
+        echo "日期[${_dat}]年[${_y}]无效，年只能在[1970~2999]之间!"
+        exit 3
+    fi
+    ##5.日加减
+
+    echo "TODO"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -26,8 +26,10 @@ public class LoadDBToHive {
     private static String user = "";
     private static String password = "";
     private static String table = "";
+    private static String sql = "";
     private static String hivetable = "";
     private static String rq = "";
+    private static String mode = "0";
 
     private static Options options = new Options();
 
@@ -50,8 +52,10 @@ public class LoadDBToHive {
         options.addOption("user",true,"db username [xxx]");
         options.addOption("password",true,"Load Hive TableName");
         options.addOption("table",true,"db table or view [xxx]");
+        options.addOption("sql",true,"sql [xxx]");
         options.addOption("hivetable",true,"hive table or view [xxx]");
         options.addOption("d",true,"rq [yyyymmdd]");
+        options.addOption("mode",true,"mode [0|1]");
         CommandLine commandLine = new GnuParser().parse(options , args);
         if (commandLine.hasOption("driver")){
             driver = commandLine.getOptionValue("driver");
@@ -78,6 +82,11 @@ public class LoadDBToHive {
         } else {
             printUsage();
         }
+        if (commandLine.hasOption("sql")){
+            sql = commandLine.getOptionValue("sql");
+        } else {
+            sql = "";
+        }
         if (commandLine.hasOption("hivetable")){
             hivetable = commandLine.getOptionValue("hivetable");
         } else {
@@ -87,6 +96,11 @@ public class LoadDBToHive {
             rq = commandLine.getOptionValue("rq");
         } else {
             printUsage();
+        }
+        if (commandLine.hasOption("mode")){
+            mode = commandLine.getOptionValue("mode");
+        } else {
+            mode = "0";
         }
     }
 
