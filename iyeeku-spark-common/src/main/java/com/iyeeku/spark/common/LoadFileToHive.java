@@ -1,15 +1,13 @@
 package com.iyeeku.spark.common;
 
-import com.iyeeku.spark.util.AppConfig;
-import com.iyeeku.spark.util.FixedFileToDataFrame;
-import com.iyeeku.spark.util.LogUtil;
-import com.iyeeku.spark.util.TableOps;
+import com.iyeeku.spark.util.*;
 import org.apache.commons.cli.*;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.spark.SparkConf;
 import org.apache.spark.deploy.SparkHadoopUtil;
 import org.apache.spark.sql.*;
+import scala.App;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -103,7 +101,7 @@ public class LoadFileToHive {
     }
 
 
-    public static void main(String[] args) throws ParseException,IOException{
+    public static void main(String[] args) throws Exception{
 
         SparkConf sparkConf = new SparkConf();
         validate(args,sparkConf);
@@ -116,15 +114,11 @@ public class LoadFileToHive {
          */
         SparkSession spark = SparkSession.builder().enableHiveSupport().getOrCreate();
 
-        try {
-            //获取输入表对应的数据库和表名
-            scala.Tuple2<String,String> tableIdentifier_tableName = TableOps.formatTable(spark,tableNameInput);
-            tableNameDb = tableIdentifier_tableName._1;
-            tableName = tableIdentifier_tableName._2;
-        }catch (Exception e){
-            e.printStackTrace();
-            System.exit(1);
-        }
+
+        //获取输入表对应的数据库和表名
+        scala.Tuple2<String,String> tableIdentifier_tableName = TableOps.formatTable(spark,tableNameInput);
+        tableNameDb = tableIdentifier_tableName._1;
+        tableName = tableIdentifier_tableName._2;
 
         //初始化日志目录
         String logPath = LogUtil.initLogDir(rq);
@@ -134,9 +128,18 @@ public class LoadFileToHive {
         //解压缩hdfs文件
         com.iyeeku.spark.util.HdfsUtils.gzipFileToHdfs(dataGzPath,dataPath);
 
-
         Dataset<Row> df = FixedFileToDataFrame.getDataFrame(spark.sqlContext(),flgPath,dataPath);
         df.write().mode(SaveMode.Overwrite).saveAsTable(tableNameInput);
+
+        //加载临时表到历史表
+        String tableHis = tableNameDb + "." + tableName + AppConfig.HIS_TABLE_FIX;
+        //若表不存在则创建历史表
+        com.iyeeku.spark.util.Schema.createTableHis(spark,tableNameInput,tableHis,false);
+        String select_sql = com.iyeeku.spark.util.Schema.getDiffFieldSqlNoPartition(spark,tableNameInput,tableHis);
+        String insert_table_his_sql = "insert overwrite table " + tableHis + " partition (" + AppConfig.DEFAULT_PARTITION_RQ_NAME + "=" +rq+")"
+                    + " select " + select_sql + " from " + tableNameInput;
+        spark.sql("set hive.exec.dynamic.partition.mode=nonstrict");
+        SqlParseUtil.runSqlSegment(spark,insert_table_his_sql);
 
         //将解压缩后的文件删除
         if (fs.exists(new Path(dataPath))){

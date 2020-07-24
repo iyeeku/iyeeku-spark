@@ -17,6 +17,7 @@ import java.util.Properties;
  **/
 public class AppConfig {
 
+    //public static String DEFAULT_PARTITION_RQ_NAME = "ywrq_";
     public static String APP_CONF_URL_KEY = "spark.app.conf";
     public static String DEFAULT_APP_CONF_URL = "/user/iyeeku/base.cfg";
 

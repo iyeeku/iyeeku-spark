@@ -43,6 +43,17 @@ public class JdbcTableDataFrame {
         return df;
     }
 
+    public static Dataset<Row> getDataFrame(SparkSession spark,String driver,String url,String user,String passwd,String table,String sql,String mode){
+        return spark.read().format("jdbc")
+                .option("driver",driver)
+                .option("user",user)
+                .option("password",passwd)
+                .option("url",url)
+                .option(org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.JDBC_BATCH_FETCH_SIZE(),""+batchFetchSize)
+                .option("dbtable","0".equals(mode) ? table : "(" + sql + ") ttt")
+                .load();
+    }
+
     public static void fromDataFrameToJdbc(Dataset<Row> df,String driver,String url,String user,String passwd,String table){
         Properties prop = new Properties();
         prop.setProperty("user",user);
